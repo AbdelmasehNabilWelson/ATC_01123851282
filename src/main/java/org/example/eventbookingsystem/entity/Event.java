@@ -3,9 +3,9 @@ package org.example.eventbookingsystem.entity;
 import jakarta.persistence.*;
 import org.example.eventbookingsystem.security.User;
 
-import java.sql.Timestamp;
 import java.time.Instant;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 public class Event {
@@ -28,4 +28,7 @@ public class Event {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User user;
+
+    @OneToMany(mappedBy = "event")
+    private Set<Booking> eventBookings = new HashSet<>();
 }

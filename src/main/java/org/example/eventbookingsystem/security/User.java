@@ -3,14 +3,13 @@ package org.example.eventbookingsystem.security;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.example.eventbookingsystem.entity.Event;
+import org.example.eventbookingsystem.entity.Booking;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -39,9 +38,8 @@ public class User implements UserDetails {
     @Column(name = "role")
     private Set<String> roles = new HashSet<>();
 
-
     @OneToMany(mappedBy = "user")
-    private List<Event> events;
+    private Set<Booking> userBookings = new HashSet<>();
 
     @Override
     public boolean isAccountNonExpired() {
