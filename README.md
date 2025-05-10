@@ -1,32 +1,60 @@
-# Event Management System
+# Event Booking System
 
-## Technology Used
-1. Spring boot as a backend framework
-2. JWT for authentication
-3. Maven for dependency management
+Welcome to our Event Booking System! This easy-to-use platform helps you find and book events that interest you.
 
-## Project Overview
-This is an Event Booking System that allows users to book events. Admins to create and manage events The system includes user authentication, event management, and booking functionalities.
+## What This System Does
 
-## Setup Instructions
-1. Clone the repository
-2. Make sure you have Java 11+ and Maven installed
-3. Navigate to the project directory
-4. Run `mvn clean install` to build the project
-5. Run `mvn spring-boot:run` to start the application
-6. The application will be available at `http://localhost:8080`
+This system lets you:
+- Find and book events you want to attend
+- Create an account and log in securely
+- If you're an admin, you can create and manage events
 
-## Features
-- User authentication (signup, login)
-- Event creation and management
-- Booking system for events
-- Address management for events
+## Technologies We Use
 
-## API Endpoints
-- `/api/auth/signup` - Register a new user
-- `/api/auth/login` - Login and get JWT token
+We built this system using:
+1. Spring Boot - a tool that makes creating web applications easier
+2. JWT (JSON Web Tokens) - a secure way to handle user logins
+3. Maven - a tool that helps manage the project's parts
 
-## Backend Features
-- Secure authentication using JWT
-- RESTful API design
-- Exception handling
+## How to Set Up the System
+
+Follow these simple steps to get started:
+
+1. Download the project files to your computer
+2. Make sure you have Java version 11 or newer and Maven installed
+3. Open your command prompt and go to the project folder
+4. Type `mvn clean install` and press Enter to build the project
+5. Type `mvn spring-boot:run` and press Enter to start the application
+6. Open your web browser and go to `http://localhost:8080`
+
+## Main Features
+
+Our system offers:
+- User accounts: Create an account and log in securely
+- Event management: Browse events, see details, and book tickets
+- Booking system: Reserve your spot at events you want to attend
+- Location management: Find events based on their location
+
+## How to Use the API
+
+If you're a developer, you can use these endpoints:
+
+### Authentication Endpoints
+- `/api/auth/signup` - Create a new user account
+- `/api/auth/login` - Log in and get your access token
+- `/api/auth/logout` - Log out from your current session
+
+### Event Management Endpoints (Admin Only)
+- `/api/events/create` - Create a new event
+- `/api/events/{id}` - Get details of a specific event
+- `/api/events/{id}` - Update an existing event (PUT method)
+- `/api/events/{id}` - Delete an event (DELETE method)
+
+## Technical Details
+
+For developers, our system includes:
+- Secure user authentication with JWT
+- Clean and organized API design
+- Proper error handling to help solve problems
+
+We hope you enjoy using our Event Booking System! If you have questions or need help, please let us know.
