@@ -1,6 +1,5 @@
 package org.example.eventbookingsystem.Service;
 
-import jakarta.persistence.EntityNotFoundException;
 import lombok.extern.slf4j.Slf4j;
 import org.example.eventbookingsystem.dto.CreateEventRequestDTO;
 import org.example.eventbookingsystem.dto.EventResponseDTO;
@@ -8,9 +7,8 @@ import org.example.eventbookingsystem.dto.UpdateEventDTO;
 import org.example.eventbookingsystem.entity.Event;
 import org.example.eventbookingsystem.exceptions.EventNotFoundException;
 import org.example.eventbookingsystem.repository.EventRepository;
-import org.example.eventbookingsystem.repository.UserRepository;
-import org.example.eventbookingsystem.security.User;
-import org.springframework.http.ProblemDetail;
+import org.example.eventbookingsystem.security.repository.UserRepository;
+import org.example.eventbookingsystem.security.Entity.User;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 

@@ -6,10 +6,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.example.eventbookingsystem.security.service.AuthService;
 import org.example.eventbookingsystem.dto.LoginResponseDTO;
 import org.example.eventbookingsystem.dto.SignUpRequest;
-import org.example.eventbookingsystem.security.JWTUtil;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
@@ -20,8 +18,6 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api/auth")
 public class AuthController {
     private final AuthService authService;
-    private final AuthenticationManager authenticationManager;
-    private final JWTUtil jwtUtil;
 
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestHeader("Authorization") String authHeader) {
@@ -31,7 +27,6 @@ public class AuthController {
         }
 
         try {
-            // Extract and decode Basic auth credentials
             String base64Credentials = authHeader.substring("Basic ".length()).trim();
             String credentials = new String(java.util.Base64.getDecoder().decode(base64Credentials));
             String[] values = credentials.split(":", 2);
@@ -45,9 +40,8 @@ public class AuthController {
             String password = values[1];
     
             log.info("Attempting login for user: {}", username);
-    
-            // Use the authService to handle the authentication
-            LoginResponseDTO response = authService.loginWithCredentials(username, password);
+
+            LoginResponseDTO response = authService.login(username, password);
             
             return ResponseEntity.ok(response);
         } catch (BadCredentialsException e) {
@@ -64,9 +58,15 @@ public class AuthController {
     }
 
     @PostMapping("/signup")
-    public ResponseEntity<LoginResponseDTO> signup(@Valid @RequestBody SignUpRequest signUpRequest) {
-        LoginResponseDTO response = authService.signupAndLogin(signUpRequest);
-        return ResponseEntity.ok().body(response);
+    public ResponseEntity<String> signup(@Valid @RequestBody SignUpRequest signUpRequest) {
+        authService.signup(signUpRequest);
+        return ResponseEntity.ok().body("Check your email for verification Link");
+    }
+
+    @GetMapping("/verify")
+    public ResponseEntity<String> verify(@RequestParam("token") String token) {
+        authService.verifyUser(token);
+        return ResponseEntity.ok().body("You are verified successfully, you can now login");
     }
 
     @PostMapping("/logout")

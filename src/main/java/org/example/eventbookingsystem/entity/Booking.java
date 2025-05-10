@@ -1,7 +1,7 @@
 package org.example.eventbookingsystem.entity;
 
 import jakarta.persistence.*;
-import org.example.eventbookingsystem.security.User;
+import org.example.eventbookingsystem.security.Entity.User;
 
 import java.time.Instant;
 

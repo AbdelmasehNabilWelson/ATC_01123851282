@@ -2,7 +2,7 @@ package org.example.eventbookingsystem.entity;
 
 import jakarta.persistence.*;
 import lombok.Data;
-import org.example.eventbookingsystem.security.User;
+import org.example.eventbookingsystem.security.Entity.User;
 
 import java.time.Instant;
 import java.util.HashSet;

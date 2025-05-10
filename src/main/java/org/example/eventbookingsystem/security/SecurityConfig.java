@@ -16,7 +16,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 @Configuration
 @EnableWebSecurity
@@ -47,8 +46,7 @@ public class SecurityConfig {
             .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
             .authorizeHttpRequests(auth ->
                     auth
-                            .requestMatchers("/api/auth/login", "/api/auth/signup").permitAll()
-                            .requestMatchers("/api/auth/signup").permitAll()
+                            .requestMatchers("/api/auth/**").permitAll()
                             .requestMatchers("/error").permitAll()
                             .requestMatchers("/api/events/**").hasRole("ADMIN")
                             .anyRequest().authenticated()

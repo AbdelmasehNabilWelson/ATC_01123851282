@@ -1,6 +1,6 @@
-package org.example.eventbookingsystem.repository;
+package org.example.eventbookingsystem.security.repository;
 
-import org.example.eventbookingsystem.security.User;
+import org.example.eventbookingsystem.security.Entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

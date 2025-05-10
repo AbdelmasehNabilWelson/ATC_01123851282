@@ -27,6 +27,37 @@ Follow these simple steps to get started:
 5. Type `mvn spring-boot:run` and press Enter to start the application
 6. Open your web browser and go to `http://localhost:8080`
 
+### Setting Up Email Verification with Mailtrap
+
+For development and testing, we use Mailtrap to handle email verification. We've implemented the Mailtrap Java SDK for better integration. Follow these steps to set it up:
+
+1. **Create a Mailtrap Account**
+   - Go to [Mailtrap.io](https://mailtrap.io/) and sign up for a free account
+   - After signing up, you'll be directed to your dashboard
+
+2. **Get Your Mailtrap API Token and Inbox ID**
+   - Go to your Mailtrap dashboard
+   - Click on your profile icon in the top-right corner and select "API"
+   - Copy your API token
+   - Go back to the dashboard and select your inbox
+   - Note the inbox ID from the URL (e.g., https://mailtrap.io/inboxes/1234567/messages - here 1234567 is your inbox ID)
+
+3. **Update Your application.properties File**
+   - Open `src/main/resources/application.properties`
+   - Replace the placeholders with your actual Mailtrap credentials:
+     ```properties
+     mailtrap.api.token=your-actual-mailtrap-api-token
+     mailtrap.inbox.id=your-actual-mailtrap-inbox-id
+     mailtrap.sandbox.enabled=true
+     ```
+
+4. **Test the Email Verification**
+   - Start your Spring Boot application
+   - Try the signup process by sending a POST request to `/api/auth/signup`
+   - Check your Mailtrap inbox - you should see the verification email appear there
+
+The application uses the Mailtrap Java SDK to send emails, which provides better reliability and more features than the standard SMTP approach. The implementation is based on the [Mailtrap Java SDK](https://github.com/railsware/mailtrap-java) guide.
+
 ## Main Features
 
 Our system offers:

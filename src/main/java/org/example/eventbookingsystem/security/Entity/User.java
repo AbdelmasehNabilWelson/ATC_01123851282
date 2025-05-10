@@ -1,4 +1,4 @@
-package org.example.eventbookingsystem.security;
+package org.example.eventbookingsystem.security.Entity;
 
 import jakarta.persistence.*;
 import lombok.Data;
