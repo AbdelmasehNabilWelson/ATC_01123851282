@@ -1,9 +1,9 @@
-package org.example.eventbookingsystem.controller;
+package org.example.eventbookingsystem.security.controller;
 
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.example.eventbookingsystem.Service.AuthService;
+import org.example.eventbookingsystem.security.service.AuthService;
 import org.example.eventbookingsystem.dto.LoginResponseDTO;
 import org.example.eventbookingsystem.dto.SignUpRequest;
 import org.example.eventbookingsystem.security.JWTUtil;

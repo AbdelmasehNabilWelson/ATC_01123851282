@@ -1,4 +1,4 @@
-package org.example.eventbookingsystem.Service;
+package org.example.eventbookingsystem.security.service;
 
 import org.example.eventbookingsystem.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;

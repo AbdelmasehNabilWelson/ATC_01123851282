@@ -1,4 +1,4 @@
-package org.example.eventbookingsystem.Service;
+package org.example.eventbookingsystem.security.service;
 
 import lombok.extern.slf4j.Slf4j;
 import org.example.eventbookingsystem.dto.LoginRequestDTO;

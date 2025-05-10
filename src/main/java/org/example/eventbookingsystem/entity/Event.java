@@ -1,12 +1,14 @@
 package org.example.eventbookingsystem.entity;
 
 import jakarta.persistence.*;
+import lombok.Data;
 import org.example.eventbookingsystem.security.User;
 
 import java.time.Instant;
 import java.util.HashSet;
 import java.util.Set;
 
+@Data
 @Entity
 public class Event {
     @Id
