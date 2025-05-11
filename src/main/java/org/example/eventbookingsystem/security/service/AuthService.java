@@ -123,6 +123,7 @@ public class AuthService {
             User user = authToken.getUser();
             user.setEnabled(true);
             userRepository.save(user);
+            authenticationTokenRepository.delete(authToken); // no need to keep the token to save storage.
             log.info("User with username: {} verified successfully", user.getUsername());
             return;
         }

@@ -13,6 +13,8 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.time.Instant;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Slf4j
 @Service
@@ -78,6 +80,16 @@ public class EventService {
         return convertEventToEventResponseDTO(event);
     }
 
+    public List<EventResponseDTO> getAllEvents() {
+        log.info("Returning all events");
+        var allEvents = eventRepository.findAll();
+
+        List<EventResponseDTO> responseDTOList = allEvents.stream()
+                .map(this::convertEventToEventResponseDTO)
+                .toList();
+        return responseDTOList;
+    }
+
     private Event convertCreateEventDTOToEvent(CreateEventRequestDTO createEventDTO) {
         Event event = new Event();
         event.setTitle(createEventDTO.getTitle());
@@ -97,4 +109,5 @@ public class EventService {
         createEventResponseDTO.setCapacity(event.getCapacity());
         return createEventResponseDTO;
     }
+
 }

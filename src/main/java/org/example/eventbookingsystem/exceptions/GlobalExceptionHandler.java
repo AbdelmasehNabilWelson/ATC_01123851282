@@ -1,5 +1,6 @@
 package org.example.eventbookingsystem.exceptions;
 
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.ConstraintViolationException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.AuthenticationException;
@@ -20,8 +21,18 @@ public class GlobalExceptionHandler {
         return ResponseEntity.badRequest().body(e.getMessage());
     }
 
-    @ExceptionHandler(ConstraintViolationException.class)
+    @ExceptionHandler(ConstraintViolationException.class) // related to Jakatra validation fails
     ResponseEntity<String> handleConstraintViolationException(ConstraintViolationException e) {
+        return ResponseEntity.badRequest().body(e.getMessage());
+    }
+
+    @ExceptionHandler(EntityNotFoundException.class)
+    ResponseEntity<String> handleEntityNotFoundException(EntityNotFoundException e) {
+        return ResponseEntity.badRequest().body(e.getMessage());
+    }
+
+    @ExceptionHandler(IllegalArgumentException.class)
+    ResponseEntity<String> handleIllegalArgumentException(IllegalArgumentException e) {
         return ResponseEntity.badRequest().body(e.getMessage());
     }
 }

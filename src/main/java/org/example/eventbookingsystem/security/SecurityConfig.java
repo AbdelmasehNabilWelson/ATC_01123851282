@@ -49,6 +49,7 @@ public class SecurityConfig {
                             .requestMatchers("/api/auth/**").permitAll()
                             .requestMatchers("/error").permitAll()
                             .requestMatchers("/api/events/**").hasRole("ADMIN")
+                            .requestMatchers("/api/bookings/**").hasAnyRole("ADMIN", "USER")
                             .anyRequest().authenticated()
             )
             .authenticationProvider(authenticationProvider())

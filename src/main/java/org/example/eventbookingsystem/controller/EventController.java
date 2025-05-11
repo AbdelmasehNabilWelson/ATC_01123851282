@@ -11,6 +11,8 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/events")
 @PreAuthorize("hasRole('ADMIN')")
@@ -42,5 +44,10 @@ public class EventController {
     @PutMapping("/{id}")
     public ResponseEntity<EventResponseDTO> updateEvent(@PathVariable Long id, @Valid @RequestBody UpdateEventDTO updateEventDTO) {
         return ResponseEntity.ok(eventService.updateEvent(id, updateEventDTO));
+    }
+
+    @GetMapping("/all")
+    public ResponseEntity<List<EventResponseDTO>> getAllEvents() {
+        return ResponseEntity.ok(eventService.getAllEvents());
     }
 }

@@ -73,13 +73,19 @@ If you're a developer, you can use these endpoints:
 ### Authentication Endpoints
 - `/api/auth/signup` - Create a new user account
 - `/api/auth/login` - Log in and get your access token
-- `/api/auth/logout` - Log out from your current session
+- `/api/auth/logout` - Clear security context (client-side logout)
+- `/api/auth/verify` - Verify your email address with the token sent to your email
 
 ### Event Management Endpoints (Admin Only)
 - `/api/events/create` - Create a new event
 - `/api/events/{id}` - Get details of a specific event
 - `/api/events/{id}` - Update an existing event (PUT method)
 - `/api/events/{id}` - Delete an event (DELETE method)
+- `/api/events/all` - Get a list of all events
+
+### Booking Management Endpoints
+- `/api/bookings/create` - Book tickets for an event
+- `/api/bookings/{id}` - Get details of a specific booking
 
 ## Technical Details
 
@@ -87,5 +93,10 @@ For developers, our system includes:
 - Secure user authentication with JWT
 - Clean and organized API design
 - Proper error handling to help solve problems
+
+## Security Features
+
+Our system prioritizes security with these features:
+- JWT tokens with configurable expiration (default: 1 hour)
 
 We hope you enjoy using our Event Booking System! If you have questions or need help, please let us know.

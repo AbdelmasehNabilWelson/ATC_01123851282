@@ -67,4 +67,3 @@ public class User implements UserDetails {
                 .collect(Collectors.toSet());
     }
 }
-
