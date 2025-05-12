@@ -33,4 +33,7 @@ public class Event {
 
     @OneToMany(mappedBy = "event")
     private Set<Booking> eventBookings = new HashSet<>();
+
+    @ManyToMany(mappedBy = "events")
+    private Set<Category> categories = new HashSet<>();
 }

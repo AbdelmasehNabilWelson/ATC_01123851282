@@ -15,6 +15,8 @@ public class Booking {
 
     private Instant createdAt;
 
+    private Long capacity;
+
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;

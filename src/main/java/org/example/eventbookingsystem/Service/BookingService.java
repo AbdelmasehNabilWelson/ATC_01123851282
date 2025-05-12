@@ -37,6 +37,7 @@ public class BookingService {
         booking.setCreatedAt(Instant.now());
         booking.setUser(user);
         booking.setEvent(event);
+        booking.setCapacity(bookingRequestDTO.getCapacity());
         bookingRepository.save(booking);
 
         BookingResponseDTO responseDTO = new BookingResponseDTO();

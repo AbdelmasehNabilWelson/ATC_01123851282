@@ -20,4 +20,6 @@ public class CreateEventRequestDTO {
 
     @NotNull
     private Long capacity;
+
+
 }

@@ -3,7 +3,7 @@ package org.example.eventbookingsystem.dto;
 import lombok.Data;
 
 @Data
-public class BookingResponseDTO {
+public class CategoryResponseDTO {
     private Long id;
-    private Long capacity;
+    private String name;
 }
