@@ -1,14 +1,14 @@
 package org.example.eventbookingsystem.security.service;
 
 import lombok.extern.slf4j.Slf4j;
-import org.example.eventbookingsystem.dto.LoginResponseDTO;
-import org.example.eventbookingsystem.dto.SignUpRequest;
+import org.example.eventbookingsystem.api.dto.RESTUserLoginResponseDTO;
+import org.example.eventbookingsystem.api.dto.RESTUserRegistrationDTO;
 import org.example.eventbookingsystem.security.Entity.AuthenticationToken;
 import org.example.eventbookingsystem.security.repository.AuthenticationTokenRepository;
 import org.example.eventbookingsystem.security.repository.UserRepository;
-import org.example.eventbookingsystem.security.JWTUtil;
+import org.example.eventbookingsystem.security.jwt.JWTUtil;
 import org.example.eventbookingsystem.security.Entity.User;
-import org.example.eventbookingsystem.Service.MailtrapEmailService;
+import org.example.eventbookingsystem.domain.Service.Service.MailtrapEmailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -52,7 +52,7 @@ public class AuthService {
         this.authenticationTokenRepository = authenticationTokenRepository;
     }
 
-    public LoginResponseDTO login(String username, String password) {
+    public RESTUserLoginResponseDTO login(String username, String password) {
         try {
             UsernamePasswordAuthenticationToken token = new
                     UsernamePasswordAuthenticationToken(username, password);
@@ -68,7 +68,7 @@ public class AuthService {
 
             String jwtToken = jwtUtil.generateToken(userDetails.getUsername(), claims);
 
-            LoginResponseDTO loginResponseDTO = new LoginResponseDTO();
+            RESTUserLoginResponseDTO loginResponseDTO = new RESTUserLoginResponseDTO();
             loginResponseDTO.setUsername(userDetails.getUsername());
             loginResponseDTO.setAccessToken(jwtToken);
             loginResponseDTO.setTokenType("Bearer");
@@ -79,7 +79,7 @@ public class AuthService {
         }
     }
 
-    public void signup(SignUpRequest signUpRequest) {
+    public void signup(RESTUserRegistrationDTO signUpRequest, boolean isAPIRequest) {
         if (userRepository.existsByUsername(signUpRequest.getUsername())) {
             log.error("User with username: {} exists. try another one", signUpRequest.getUsername());
             throw new BadCredentialsException("User with username: " + signUpRequest.getUsername() + "exists");
@@ -98,19 +98,25 @@ public class AuthService {
         user.setRoles(Set.of("USER")); // users only are allowed to sign up from apis. admins are manually added by other admins
         userRepository.save(user);
 
-        sendVerificationEmail(user);
+        sendVerificationEmail(user, isAPIRequest);
     }
 
-    private void sendVerificationEmail(User user) {
+    private void sendVerificationEmail(User user, Boolean isAPIRequest) {
         AuthenticationToken authenticationToken = new AuthenticationToken();
         authenticationToken.setToken(UUID.randomUUID().toString());
         authenticationToken.setUser(user);
         authenticationToken.setExpiryDate(LocalDateTime.now().plusMinutes(15));
         authenticationTokenRepository.save(authenticationToken);
 
+
         String subject = "Event Booking System - Verify your email";
-        String text = "Click the following link to verify your email" + "\n" +
-                "http://" + apiServerDomain + "/api/auth/verify?token=" + authenticationToken.getToken();
+        String text = "Click the following link to verify your email" + "\n";
+
+        if (isAPIRequest) {
+            text += "http://" + apiServerDomain + "/api/auth/verify?token=" + authenticationToken.getToken();
+        } else {
+            text += "http://" + apiServerDomain + "/verify?token=" + authenticationToken.getToken();
+        }
 
         mailtrapEmailService.sendEmail(user.getEmail(), subject, text);
     }
