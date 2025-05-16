@@ -1,4 +1,4 @@
-package org.example.eventbookingsystem.domain.entity.entity;
+package org.example.eventbookingsystem.domain.entity;
 
 import jakarta.persistence.*;
 import lombok.Data;

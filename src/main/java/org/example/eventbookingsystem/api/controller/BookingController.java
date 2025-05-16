@@ -1,7 +1,7 @@
 package org.example.eventbookingsystem.api.controller;
 
 import lombok.extern.slf4j.Slf4j;
-import org.example.eventbookingsystem.domain.Service.Service.BookingService;
+import org.example.eventbookingsystem.common.Service.BookingService;
 import org.example.eventbookingsystem.api.dto.BookingRequestDTO;
 import org.example.eventbookingsystem.api.dto.BookingResponseDTO;
 import org.example.eventbookingsystem.security.Entity.User;

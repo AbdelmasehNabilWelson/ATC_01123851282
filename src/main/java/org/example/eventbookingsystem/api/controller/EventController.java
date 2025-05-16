@@ -1,7 +1,7 @@
 package org.example.eventbookingsystem.api.controller;
 
 import jakarta.validation.Valid;
-import org.example.eventbookingsystem.domain.Service.Service.EventService;
+import org.example.eventbookingsystem.common.Service.EventService;
 import org.example.eventbookingsystem.api.dto.CreateEventRequestDTO;
 import org.example.eventbookingsystem.api.dto.EventResponseDTO;
 import org.example.eventbookingsystem.api.dto.UpdateEventDTO;

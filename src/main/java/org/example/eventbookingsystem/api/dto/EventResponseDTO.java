@@ -2,7 +2,7 @@ package org.example.eventbookingsystem.api.dto;
 
 import jakarta.persistence.Embedded;
 import lombok.Data;
-import org.example.eventbookingsystem.domain.entity.entity.Address;
+import org.example.eventbookingsystem.domain.entity.Address;
 
 @Data
 public class EventResponseDTO {

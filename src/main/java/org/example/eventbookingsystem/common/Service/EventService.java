@@ -1,12 +1,12 @@
-package org.example.eventbookingsystem.domain.Service.Service;
+package org.example.eventbookingsystem.common.Service;
 
 import lombok.extern.slf4j.Slf4j;
 import org.example.eventbookingsystem.api.dto.CreateEventRequestDTO;
 import org.example.eventbookingsystem.api.dto.EventResponseDTO;
 import org.example.eventbookingsystem.api.dto.UpdateEventDTO;
-import org.example.eventbookingsystem.domain.entity.entity.Event;
+import org.example.eventbookingsystem.domain.entity.Event;
 import org.example.eventbookingsystem.api.advice.EventNotFoundException;
-import org.example.eventbookingsystem.domain.repository.EventRepository;
+import org.example.eventbookingsystem.common.repository.EventRepository;
 import org.example.eventbookingsystem.security.repository.UserRepository;
 import org.example.eventbookingsystem.security.Entity.User;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;

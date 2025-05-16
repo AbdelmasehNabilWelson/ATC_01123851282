@@ -1,6 +1,6 @@
-package org.example.eventbookingsystem.domain.repository;
+package org.example.eventbookingsystem.common.repository;
 
-import org.example.eventbookingsystem.domain.entity.entity.Booking;
+import org.example.eventbookingsystem.domain.entity.Booking;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

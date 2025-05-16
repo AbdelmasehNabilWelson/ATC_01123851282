@@ -3,7 +3,7 @@ package org.example.eventbookingsystem.security.Entity;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.example.eventbookingsystem.domain.entity.entity.Booking;
+import org.example.eventbookingsystem.domain.entity.Booking;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;

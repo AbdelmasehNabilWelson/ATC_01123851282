@@ -1,4 +1,4 @@
-package org.example.eventbookingsystem.domain.Service.Service;
+package org.example.eventbookingsystem.common.Service;
 
 import io.mailtrap.client.MailtrapClient;
 import io.mailtrap.config.MailtrapConfig;

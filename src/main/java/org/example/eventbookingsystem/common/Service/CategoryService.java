@@ -1,11 +1,11 @@
-package org.example.eventbookingsystem.domain.Service.Service;
+package org.example.eventbookingsystem.common.Service;
 
 import jakarta.persistence.EntityNotFoundException;
 import org.example.eventbookingsystem.api.dto.categoryCreateRequestDTO;
 import org.example.eventbookingsystem.api.dto.CategoryResponseDTO;
 import org.example.eventbookingsystem.api.dto.UpdateCategoryRequestDTO;
-import org.example.eventbookingsystem.domain.entity.entity.Category;
-import org.example.eventbookingsystem.domain.repository.CategoryRepository;
+import org.example.eventbookingsystem.domain.entity.Category;
+import org.example.eventbookingsystem.common.repository.CategoryRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;

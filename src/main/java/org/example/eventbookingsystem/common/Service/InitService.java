@@ -1,4 +1,4 @@
-package org.example.eventbookingsystem.domain.Service.Service;
+package org.example.eventbookingsystem.common.Service;
 
 import jakarta.annotation.PostConstruct;
 import org.example.eventbookingsystem.security.repository.UserRepository;

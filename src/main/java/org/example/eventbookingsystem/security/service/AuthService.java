@@ -8,7 +8,7 @@ import org.example.eventbookingsystem.security.repository.AuthenticationTokenRep
 import org.example.eventbookingsystem.security.repository.UserRepository;
 import org.example.eventbookingsystem.security.jwt.JWTUtil;
 import org.example.eventbookingsystem.security.Entity.User;
-import org.example.eventbookingsystem.domain.Service.Service.MailtrapEmailService;
+import org.example.eventbookingsystem.common.Service.MailtrapEmailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.AuthenticationManager;

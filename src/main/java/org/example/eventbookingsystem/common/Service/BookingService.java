@@ -1,13 +1,13 @@
-package org.example.eventbookingsystem.domain.Service.Service;
+package org.example.eventbookingsystem.common.Service;
 
 import jakarta.persistence.EntityNotFoundException;
 import lombok.extern.slf4j.Slf4j;
 import org.example.eventbookingsystem.api.dto.BookingRequestDTO;
 import org.example.eventbookingsystem.api.dto.BookingResponseDTO;
-import org.example.eventbookingsystem.domain.entity.entity.Booking;
-import org.example.eventbookingsystem.domain.entity.entity.Event;
-import org.example.eventbookingsystem.domain.repository.BookingRepository;
-import org.example.eventbookingsystem.domain.repository.EventRepository;
+import org.example.eventbookingsystem.domain.entity.Booking;
+import org.example.eventbookingsystem.domain.entity.Event;
+import org.example.eventbookingsystem.common.repository.BookingRepository;
+import org.example.eventbookingsystem.common.repository.EventRepository;
 import org.example.eventbookingsystem.security.Entity.User;
 import org.springframework.stereotype.Service;
 

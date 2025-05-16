@@ -4,7 +4,7 @@ import jakarta.persistence.Embedded;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
-import org.example.eventbookingsystem.domain.entity.entity.Address;
+import org.example.eventbookingsystem.domain.entity.Address;
 
 import java.time.OffsetDateTime;
 
