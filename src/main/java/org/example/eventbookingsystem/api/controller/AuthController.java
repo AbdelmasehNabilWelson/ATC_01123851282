@@ -4,8 +4,8 @@ import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.example.eventbookingsystem.security.service.AuthService;
-import org.example.eventbookingsystem.api.dto.RESTUserLoginResponseDTO;
-import org.example.eventbookingsystem.api.dto.RESTUserRegistrationDTO;
+import org.example.eventbookingsystem.api.dto.JwtLogInResponseDTO;
+import org.example.eventbookingsystem.api.dto.RegisterRequestDTO;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -41,7 +41,7 @@ public class AuthController {
     
             log.info("Attempting login for user: {}", username);
 
-            RESTUserLoginResponseDTO response = authService.login(username, password);
+            JwtLogInResponseDTO response = authService.login(username, password);
             
             return ResponseEntity.ok(response);
         } catch (BadCredentialsException e) {
@@ -58,7 +58,7 @@ public class AuthController {
     }
 
     @PostMapping("/signup")
-    public ResponseEntity<String> signup(@Valid @RequestBody RESTUserRegistrationDTO signUpRequest) {
+    public ResponseEntity<String> signup(@Valid @RequestBody RegisterRequestDTO signUpRequest) {
         authService.signup(signUpRequest, true); // isAPIRequest set to true, because it is an API request
         return ResponseEntity.ok().body("Check your email for verification Link");
     }

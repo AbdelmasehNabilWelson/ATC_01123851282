@@ -1,7 +1,7 @@
 package org.example.eventbookingsystem.domain.entity;
 
 import jakarta.persistence.*;
-import lombok.Data;
+import lombok.*;
 import lombok.extern.slf4j.Slf4j;
 import org.example.eventbookingsystem.security.Entity.User;
 
@@ -11,7 +11,10 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Slf4j
-@Data
+@Getter
+@Setter
+@ToString(exclude = {"categories", "eventBookings"})
+@EqualsAndHashCode(exclude = {"categories", "eventBookings"})
 @Entity
 public class Event {
     @Id
@@ -26,10 +29,12 @@ public class Event {
 
     private Long capacity;
 
-    @Column(nullable = false, updatable = false)
+    private String imageUrl;
+
+    @Column(updatable = false)
     private Instant createdAt;
 
-    @Column(nullable = false)
+    @Column
     private Instant updatedAt;
 
 

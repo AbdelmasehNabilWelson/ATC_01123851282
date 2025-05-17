@@ -1,12 +1,15 @@
 package org.example.eventbookingsystem.domain.entity;
 
 import jakarta.persistence.*;
-import lombok.Data;
+import lombok.*;
 
 import java.util.HashSet;
 import java.util.Set;
 
-@Data
+@Getter
+@Setter
+@ToString(exclude = "events")
+@EqualsAndHashCode(exclude = "events")
 @Entity
 public class Category {
     @Id

@@ -12,6 +12,8 @@ import org.example.eventbookingsystem.security.Entity.User;
 import org.springframework.stereotype.Service;
 
 import java.time.Instant;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Slf4j
 @Service
@@ -42,6 +44,7 @@ public class BookingService {
 
         BookingResponseDTO responseDTO = new BookingResponseDTO();
         responseDTO.setId(booking.getId());
+        responseDTO.setCapacity(booking.getCapacity());
         return responseDTO;
     }
 
@@ -50,8 +53,40 @@ public class BookingService {
         Booking booking = bookingRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Booking with id: " + id + " not found"));
 
-        BookingResponseDTO responseDTO = new BookingResponseDTO();
-        responseDTO.setId(booking.getId());
-        return responseDTO;
+       return convertBookingToBookingResponseDTO(booking);
+    }
+
+    public BookingResponseDTO update(Long id, BookingRequestDTO bookingRequestDTO) {
+        log.info("Updating the booking with id: {}", id);
+        Booking booking = bookingRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Booking with id: " + id + " not found"));
+
+        Event event = booking.getEvent();
+        Long existingCapacity = event.getCapacity();
+        Long oldCapacity = booking.getCapacity();
+        Long newCapacity = bookingRequestDTO.getCapacity();
+
+        if (newCapacity > existingCapacity + oldCapacity) {
+            throw new EntityNotFoundException("Event capacity must be less than or equal to " + (existingCapacity + oldCapacity));
+        }
+        event.setCapacity(existingCapacity + oldCapacity - newCapacity);
+        booking.setCapacity(newCapacity);
+        bookingRepository.save(booking);
+
+        return convertBookingToBookingResponseDTO(booking);
+    }
+
+    public List<BookingResponseDTO> getAll(Long userId) {
+        List<Booking> bookings = bookingRepository.findBookingsByUserId(userId);
+        List<BookingResponseDTO> bookingResponse =
+                bookings.stream().map(this::convertBookingToBookingResponseDTO).collect(Collectors.toList());
+        return bookingResponse;
+    }
+
+    private BookingResponseDTO convertBookingToBookingResponseDTO(Booking booking) {
+        BookingResponseDTO bookingResponseDTO = new BookingResponseDTO();
+        bookingResponseDTO.setId(booking.getId());
+        bookingResponseDTO.setCapacity(booking.getCapacity());
+        return bookingResponseDTO;
     }
 }

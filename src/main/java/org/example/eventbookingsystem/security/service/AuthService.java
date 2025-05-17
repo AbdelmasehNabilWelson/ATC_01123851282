@@ -1,8 +1,8 @@
 package org.example.eventbookingsystem.security.service;
 
 import lombok.extern.slf4j.Slf4j;
-import org.example.eventbookingsystem.api.dto.RESTUserLoginResponseDTO;
-import org.example.eventbookingsystem.api.dto.RESTUserRegistrationDTO;
+import org.example.eventbookingsystem.api.dto.JwtLogInResponseDTO;
+import org.example.eventbookingsystem.api.dto.RegisterRequestDTO;
 import org.example.eventbookingsystem.security.Entity.AuthenticationToken;
 import org.example.eventbookingsystem.security.repository.AuthenticationTokenRepository;
 import org.example.eventbookingsystem.security.repository.UserRepository;
@@ -52,7 +52,7 @@ public class AuthService {
         this.authenticationTokenRepository = authenticationTokenRepository;
     }
 
-    public RESTUserLoginResponseDTO login(String username, String password) {
+    public JwtLogInResponseDTO login(String username, String password) {
         try {
             UsernamePasswordAuthenticationToken token = new
                     UsernamePasswordAuthenticationToken(username, password);
@@ -60,6 +60,7 @@ public class AuthService {
             Authentication authentication = authenticationManager.authenticate(token);
 
             UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+            log.info("User '{}' logged in successfully", userDetails.getUsername());
 
             Map<String, Object> claims = new HashMap<>();
             claims.put("roles", userDetails.getAuthorities().stream()
@@ -68,18 +69,18 @@ public class AuthService {
 
             String jwtToken = jwtUtil.generateToken(userDetails.getUsername(), claims);
 
-            RESTUserLoginResponseDTO loginResponseDTO = new RESTUserLoginResponseDTO();
-            loginResponseDTO.setUsername(userDetails.getUsername());
-            loginResponseDTO.setAccessToken(jwtToken);
-            loginResponseDTO.setTokenType("Bearer");
-            return loginResponseDTO;
+            JwtLogInResponseDTO jwtLogInResponseDTO = new JwtLogInResponseDTO();
+            jwtLogInResponseDTO.setUsername(userDetails.getUsername());
+            jwtLogInResponseDTO.setAccessToken(jwtToken);
+            jwtLogInResponseDTO.setTokenType("Bearer");
+            return jwtLogInResponseDTO;
         } catch (AuthenticationException e) {
             log.error("Error while authenticating user: {}", e.getMessage());
             throw new BadCredentialsException("Invalid username or password");
         }
     }
 
-    public void signup(RESTUserRegistrationDTO signUpRequest, boolean isAPIRequest) {
+    public void signup(RegisterRequestDTO signUpRequest, boolean isAPIRequest) {
         if (userRepository.existsByUsername(signUpRequest.getUsername())) {
             log.error("User with username: {} exists. try another one", signUpRequest.getUsername());
             throw new BadCredentialsException("User with username: " + signUpRequest.getUsername() + "exists");

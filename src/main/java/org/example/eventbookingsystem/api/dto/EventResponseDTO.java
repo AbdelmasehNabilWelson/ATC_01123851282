@@ -4,6 +4,9 @@ import jakarta.persistence.Embedded;
 import lombok.Data;
 import org.example.eventbookingsystem.domain.entity.Address;
 
+import java.time.OffsetDateTime;
+import java.util.Set;
+
 @Data
 public class EventResponseDTO {
     private Long id;
@@ -14,4 +17,7 @@ public class EventResponseDTO {
 
     private String description;
     private Long capacity;
+    private Set<String> categoryName;
+    private OffsetDateTime startTime;
+    private OffsetDateTime endTime;
 }

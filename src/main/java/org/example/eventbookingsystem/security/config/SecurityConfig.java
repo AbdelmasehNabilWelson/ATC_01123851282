@@ -1,6 +1,8 @@
 package org.example.eventbookingsystem.security.config;
 
 import lombok.RequiredArgsConstructor;
+import org.example.eventbookingsystem.security.filter.InvalidSessionDetectionFilter;
+import org.example.eventbookingsystem.security.handler.CustomAuthenticationSuccessHandler;
 import org.example.eventbookingsystem.security.jwt.JWTFilter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -17,6 +19,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.authentication.session.SessionAuthenticationStrategy;
+import org.springframework.security.web.authentication.session.SessionFixationProtectionStrategy;
 
 @Configuration
 @EnableWebSecurity
@@ -26,6 +30,7 @@ public class SecurityConfig {
 
     private final UserDetailsService userDetailsService;
     private final JWTFilter jwtFilter;
+    private final CustomAuthenticationSuccessHandler authenticationSuccessHandler;
 
     @Bean
     public DaoAuthenticationProvider authenticationProvider() {
@@ -50,6 +55,7 @@ public class SecurityConfig {
                         auth
                                 .requestMatchers("/api/auth/**").permitAll()
                                 .requestMatchers("/api/events/**").hasRole("ADMIN")
+                                .requestMatchers("/api/user/**").authenticated()
                                 .requestMatchers("/api/bookings/**").hasAnyRole("ADMIN", "USER")
                                 .requestMatchers("/api/category/**").hasAnyRole("ADMIN", "USER")
                                 .anyRequest().authenticated()
@@ -69,17 +75,30 @@ public class SecurityConfig {
                                 .requestMatchers("/error").permitAll()
                                 .requestMatchers("/", "/home", "/index", "/register", "/login").permitAll()
                                 .requestMatchers("/css/**", "/js/**", "/images/**").permitAll()
+                                .requestMatchers("/profile", "/profile/update").authenticated()
+                                .requestMatchers("/admin/**").hasRole("ADMIN")
+                                .requestMatchers("/dashboard").hasRole("USER")
                                 .anyRequest().authenticated()
                 )
                 .formLogin(form -> form
                         .loginPage("/login")
-                        .defaultSuccessUrl("/")
+                        .successHandler(authenticationSuccessHandler)
                         .permitAll()
                 )
                 .logout(logout -> logout
                         .logoutSuccessUrl("/login?logout")
+                        .invalidateHttpSession(true)
+                        .deleteCookies("JSESSIONID")
+                        .clearAuthentication(true)
                         .permitAll()
-                );
+                )
+                .sessionManagement(session -> session
+                        .sessionAuthenticationStrategy(sessionAuthenticationStrategy())
+                        .invalidSessionUrl("/login?expired")
+                        .maximumSessions(1)
+                        .expiredUrl("/login?expired")
+                )
+                .addFilterBefore(invalidSessionDetectionFilter(), UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
     }
@@ -87,5 +106,15 @@ public class SecurityConfig {
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
+    }
+
+    @Bean
+    public InvalidSessionDetectionFilter invalidSessionDetectionFilter() {
+        return new InvalidSessionDetectionFilter();
+    }
+
+    @Bean
+    public SessionAuthenticationStrategy sessionAuthenticationStrategy() {
+        return new SessionFixationProtectionStrategy();
     }
 }
